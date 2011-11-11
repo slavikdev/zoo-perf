@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <system.webServer>
+
+	<heliconZoo>
+	  <application name="goliath.project.x86" >
+	    <environmentVariables>
+		  <add name="RACK_ENV" value="production" />
+		</environmentVariables>
+      </application>
+
+	  <application name="goliath.project.x64" >
+	    <environmentVariables>
+		  <add name="RACK_ENV" value="production" />
+		</environmentVariables>
+      </application>
+	</heliconZoo>
+
+    <!--
+    <engine name="goliath.http4" fullPath="%SystemDrive%\Ruby19\bin\ruby.exe" arguments="&quot;%APPL_PHYSICAL_PATH%\%APP_WORKER%&quot; -e %RACK_ENV% -a %HOST% -p %PORT%" transport="tcp" protocol="http" minInstances="4" maxInstances="4" />
+    -->
+
+    <handlers>
+      <add name="goliath.project.x86" scriptProcessor="goliath.http4"  path="*" verb="*" modules="HeliconZoo_x86" preCondition="bitness32" resourceType="Unspecified" requireAccess="Script" />
+      <add name="goliath.project.x64" scriptProcessor="goliath.http4"  path="*" verb="*" modules="HeliconZoo_x64" preCondition="bitness64" resourceType="Unspecified" requireAccess="Script" />
+    </handlers>
+
+  </system.webServer>
+</configuration>
