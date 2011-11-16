@@ -1,10 +1,10 @@
 require 'rbconfig'
 
 if RbConfig::CONFIG[ 'host_os' ] =~ /mswin|mingw/
-  spawn 'cmd /K C:\\ruby19\\bin\\ruby.exe -S bundle exec C:\\ruby19\\bin\\thin -p 9187 -e production start'
-  spawn 'cmd /K C:\\ruby19\\bin\\ruby.exe -S bundle exec C:\\ruby19\\bin\\thin -p 9188 -e production start'
-  spawn 'cmd /K C:\\ruby19\\bin\\ruby.exe -S bundle exec C:\\ruby19\\bin\\thin -p 9189 -e production start'
-  spawn 'cmd /K C:\\ruby19\\bin\\ruby.exe -S bundle exec C:\\ruby19\\bin\\thin -p 9190 -e production start'
+  spawn 'cmd /K C:\\ruby19\\bin\\ruby.exe -S C:\\ruby19\\bin\\thin -p 9187 -e production start'
+  spawn 'cmd /K C:\\ruby19\\bin\\ruby.exe -S C:\\ruby19\\bin\\thin -p 9188 -e production start'
+  spawn 'cmd /K C:\\ruby19\\bin\\ruby.exe -S C:\\ruby19\\bin\\thin -p 9189 -e production start'
+  spawn 'cmd /K C:\\ruby19\\bin\\ruby.exe -S C:\\ruby19\\bin\\thin -p 9190 -e production start'
 else
-  `bundle exec thin -p 9187 -e production -s 4 -d start`
+  `thin -p 9187 -e production -s 4 -d start`
 end
