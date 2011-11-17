@@ -5,3 +5,6 @@
 *tmp/
 *log/*.log
 *.idea/
+read.txt
+write.txt
+time.txt
