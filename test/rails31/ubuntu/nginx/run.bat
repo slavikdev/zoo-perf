@@ -1,1 +1,1 @@
-..\..\..\~template.bat 8087
+..\..\..\~template.bat 8087 %1
