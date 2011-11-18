@@ -1,3 +1,3 @@
 cd nginx
-run.bat
+run.bat %1
 cd ..

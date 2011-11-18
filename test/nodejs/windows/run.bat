@@ -1,15 +1,15 @@
 cd apache
-run.bat
+run.bat %1
 cd ..
 
 cd nginx
-run.bat
+run.bat %1
 cd ..
 
 cd zoo-fcgi
-run.bat
+run.bat %1
 cd ..
 
 cd zoo-http
-run.bat
+run.bat %1
 cd ..

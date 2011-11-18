@@ -1,7 +1,7 @@
 cd ubuntu
-run.bat
+run.bat %1
 cd ..
 
 cd windows
-run.bat
+run.bat %1
 cd ..
