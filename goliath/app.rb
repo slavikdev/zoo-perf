@@ -1,17 +1,7 @@
 require 'rubygems'
 require 'goliath'
-require 'mongo'
-gem 'bson_ext'
-require 'mongo_mapper'
 
-MongoMapper.connection = Mongo::Connection.new( 'localhost', 27017 )
-MongoMapper.database = 'sinatra-test'
-
-class Dummy
-  include MongoMapper::Document
-  key :time, Time
-end
-
+require_relative '../db'
 
 class RackRoutes < Goliath::API
   use Goliath::Rack::Params
