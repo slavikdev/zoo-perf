@@ -4,7 +4,7 @@ var form = require('./node_modules/connect-form'),
 
 var client = mysql.createClient({
   user: 'root',
-  password: '123',
+  password: '123123',
   database: 'nodejs_test'
 });
 
@@ -28,49 +28,54 @@ var db = orm.connect("mysql", client, function (success, db) {
 });
 
 
-module.exports = function(app) {
-	app.get( '/time', function(req, res){
-        	res.header('Content-Type',  'text/plain');
-        	var now = new Date();
-        	res.send( now.toString() );
-	});
+module.exports = function (app) {
+    app.get('/time', function (req, res) {
+        res.header('Content-Type', 'text/plain');
+        var now = new Date();
+        res.send(now.toString());
+    });
 
 
-	app.get( '/write', function( req, res ){
-        res.header( 'Content-Type',  'text/plain' );
-        CountModel.find({ "Id": 1 }, function (family){
+    app.get('/write', function (req, res) {
+        res.header('Content-Type', 'text/plain');
+        CountModel.find({ "Id": 1 }, function (family) {
 
-	        var count;
-	        if (null != family){
-		        count =  family[0];
-	        }
-            else{
-	            count = new CountModel();
-	        }
+            if (!family) {
+                var now = new Date();
+                var count = new CountModel({ "created": now.toString() });
+                count.save();
+                res.send(count.created);
+            }
+            else {
+                var now = new Date();
+                var count = family[0];
+                count.created = now.toString();
 
-	        var now = new Date();
-	        count.created = now.toString();
-	        count.save();
-	        res.send(count.created);
-	    });
-
-	    res.send("BUG");
-	});
-
-
-	app.get( '/read', function( req, res ){
-        res.header('Content-Type',  'text/plain');
-	    CountModel.find({ "Id": 1 }, function (family){
-		    var count =  family[0];
-		    res.send( count.created.toString() );
-		});
-	});
+                count.save();
+                res.send(count.created);
+            }
+           
+            
+        });
 
 
-	app.get( '/delete_all', function( req, res ){
-		CountModel.clear(function (){
-            res.header('Content-Type',  'text/plain');
-			res.send( "Clear" );
-		});
-	});
+        //res.send("BUG");
+    });
+
+
+    app.get('/read', function (req, res) {
+        res.header('Content-Type', 'text/plain');
+        CountModel.find({ "Id": 1 }, function (family) {
+            var count = family[0];
+            res.send(count.created.toString());
+        });
+    });
+
+
+    app.get('/delete_all', function (req, res) {
+        CountModel.clear(function () {
+            res.header('Content-Type', 'text/plain');
+            res.send("Clear");
+        });
+    });
 };
