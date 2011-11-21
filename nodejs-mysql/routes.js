@@ -38,7 +38,7 @@ module.exports = function (app) {
 
     app.get('/write', function (req, res) {
         res.header('Content-Type', 'text/plain');
-        CountModel.find({ "Id": 1 }, function (family) {
+        CountModel.find(function (family) {
 
             if (!family) {
                 var now = new Date();
@@ -65,7 +65,7 @@ module.exports = function (app) {
 
     app.get('/read', function (req, res) {
         res.header('Content-Type', 'text/plain');
-        CountModel.find({ "Id": 1 }, function (family) {
+        CountModel.find(function (family) {
             var count = family[0];
             res.send(count.created.toString());
         });
