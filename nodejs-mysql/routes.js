@@ -1,40 +1,76 @@
-var db = require( 'mysql-native' ).createTCPClient(); // localhost:3306 by default
-db.auto_prepare = true;
-db.auth( "nodejs_test", "root", "123123" );
+var form = require('./node_modules/connect-form'),
+    mysql = require('./node_modules/mysql'),
+    orm = require("orm");
+
+var client = mysql.createClient({
+  user: 'root',
+  password: '123',
+  database: 'nodejs_test'
+});
+
+
+var CountModel;
+
+var db = orm.connect("mysql", client, function (success, db) {
+    if (!success) {
+        console.log("Could not connect to database!");
+        return;
+    }
+    else {
+        console.log("Connected to database!");
+
+        CountModel = db.define( "Count", { "created": { "type": "string" } } );
+
+        // sync to database
+        CountModel.sync();
+    }
+
+});
+
 
 module.exports = function(app) {
 	app.get( '/time', function(req, res){
-        res.header('Content-Type',  'text/plain');
-        var now = new Date();
-        res.send( now );
+        	res.header('Content-Type',  'text/plain');
+        	var now = new Date();
+        	res.send( now.toString() );
 	});
+
 
 	app.get( '/write', function( req, res ){
         res.header( 'Content-Type',  'text/plain' );
-        var now = new Date();                     
+        CountModel.find({ "Id": 1 }, function (family){
 
-		db.query( 'SELECT * FROM dummies' );
-		/* db.query( 'INSERT INTO dummies (id, time) VALUES ( 1,' + now + ' ) ON DUPLICATE KEY UPDATE id;' ).addListener( 'end', function() {
-			res.send( 'Dummy created' );
-		}); */
+	        var count;
+	        if (null != family){
+		        count =  family[0];
+	        }
+            else{
+	            count = new CountModel();
+	        }
+
+	        var now = new Date();
+	        count.created = now.toString();
+	        count.save();
+	        res.send(count.created);
+	    });
+
+	    res.send("BUG");
 	});
+
 
 	app.get( '/read', function( req, res ){
         res.header('Content-Type',  'text/plain');
-		/*var cursor = collection.find().limit( 1 );
-		cursor.nextObject( function( err, doc ){
-			res.send( doc.time + "\n" );
-		});		*/
+	    CountModel.find({ "Id": 1 }, function (family){
+		    var count =  family[0];
+		    res.send( count.created.toString() );
+		});
 	});
+
 
 	app.get( '/delete_all', function( req, res ){
-        res.header('Content-Type',  'text/plain');
-		/*collection.count( function( err, count ){
-			collection.remove(function(err, result) {
-				res.send( count + ' items deleted' );				
-			});
-		}); */
+		CountModel.clear(function (){
+            res.header('Content-Type',  'text/plain');
+			res.send( "Clear" );
+		});
 	});
-}
-
-db.close();
+};

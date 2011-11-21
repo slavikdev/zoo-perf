@@ -22,5 +22,9 @@ class Dummy
   end
 end
 
-DataMapper.auto_migrate!
+begin
+	DataMapper.auto_migrate!
+rescue Object => e
+end
+
 DataMapper.finalize
