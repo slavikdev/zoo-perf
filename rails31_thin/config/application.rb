@@ -15,6 +15,9 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+# Zoo database
+require_relative '../../db'
+
 module Rails31mongo
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
