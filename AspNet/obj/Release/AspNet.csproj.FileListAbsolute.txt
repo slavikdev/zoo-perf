@@ -1,0 +1,5 @@
+E:\projects\helicon\zoo-perf\AspNet\bin\AspNet.dll
+E:\projects\helicon\zoo-perf\AspNet\bin\AspNet.pdb
+E:\projects\helicon\zoo-perf\AspNet\obj\Release\ResolveAssemblyReference.cache
+E:\projects\helicon\zoo-perf\AspNet\obj\Release\AspNet.dll
+E:\projects\helicon\zoo-perf\AspNet\obj\Release\AspNet.pdb
